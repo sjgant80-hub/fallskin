@@ -20,29 +20,29 @@ function wire() {
   }
 
   const stats = [...document.querySelectorAll('.fs-stat b[data-value]')];
-  // THE FIGURE LAW: whatever visibility, motion or observers do, the EXACT real figure is on
-  // screen within 3 seconds. Animation is decoration; truth has a deadline.
-  setTimeout(() => { for (const b of stats) { const st = parseStat(b.dataset.value); const fr = st && stepsFor(st, 2); if (fr) b.textContent = fr[1]; } }, 3000);
   for (const b of stats) {
     const stat = parseStat(b.dataset.value);
     if (!stat) continue;
     const frames = stepsFor(stat, 36);
-    if (reduce || !frames) { b.textContent = frames ? frames[frames.length - 1] : b.dataset.value; continue; }
+    const final = frames ? frames[frames.length - 1] : b.dataset.value;
+    if (reduce || !frames) { b.textContent = final; continue; }
     b.textContent = frames[0];
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (!e.isIntersecting) return; io.unobserve(b);
-      // time-based with a GUARANTEED landing: rAF freezes in hidden tabs and would strand a wrong
-      // figure on screen — an interval still fires (throttled) and the deadline clamp always sets
-      // the exact final frame. The figure is the figure, whatever the tab was doing.
+      // time-based so a hidden tab (rAF frozen) still advances; on completion it clears ITSELF and
+      // pins the exact final frame.
       const dur = 900, t0 = performance.now();
-      const iv = setInterval(() => {
+      b._fsIv = setInterval(() => {
         const k = Math.min(1, (performance.now() - t0) / dur);
         b.textContent = frames[Math.min(frames.length - 1, Math.floor(k * (frames.length - 1)))];
-        if (k >= 1) clearInterval(iv);
+        if (k >= 1) { clearInterval(b._fsIv); b._fsIv = null; b.textContent = final; }
       }, 16);
     }), { threshold: 0.4 });
     io.observe(b);
   }
+  // THE FIGURE LAW: within 3s the EXACT figure is on screen. CLEAR any running count first — a
+  // throttled interval (hidden tab, frozen clock) must never re-zero the value after — then set final.
+  setTimeout(() => { for (const b of stats) { if (b._fsIv) { clearInterval(b._fsIv); b._fsIv = null; } const st = parseStat(b.dataset.value); const fr = st && stepsFor(st, 2); if (fr) b.textContent = fr[1]; } }, 3000);
 
   const sticky = document.querySelector('.fs-sticky');
   const hero = document.querySelector('.fs-hero') || document.querySelector('header');
