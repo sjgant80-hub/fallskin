@@ -1,0 +1,146 @@
+/* ════════════════════════════════════════════════════════════════════════════════════════════
+   fallskin · THE ESTATE'S SKIN — the grown design organ. One link makes any estate page an elite
+   funnel: glass depth, gold-and-emerald glow, display type, motion that respects reduced-motion.
+   Germinate:  <link rel="stylesheet" href="https://sjgant80-hub.github.io/fallskin/skin.css">
+               <script type="module" src="https://sjgant80-hub.github.io/fallskin/skin.mjs"></script>
+   Classes are namespaced fs-*. The organ owns the SKIN only — kernels and wiring stay the page's
+   (pairs with konomi-design-kit's designGate + ui-gate). Powered by the Konomi architecture,
+   created by Thomas Frumkin.
+   ═══════════════════════════════════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --fs-bg:#07060a; --fs-bg2:#0b0a12;
+  --fs-glass:rgba(255,255,255,.045); --fs-glass2:rgba(255,255,255,.028);
+  --fs-ink:#f2ecdf; --fs-muted:#9d95a8; --fs-line:rgba(255,255,255,.09);
+  --fs-gold:#e8b32a; --fs-gold2:#f6d87c; --fs-emerald:#2fd08f; --fs-emerald2:#9af0c9;
+  --fs-glow-gold:rgba(232,179,42,.32); --fs-glow-em:rgba(47,208,143,.22);
+  --fs-r:18px; --fs-r-sm:12px;
+  --fs-serif:"Playfair Display",Georgia,serif; --fs-sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --fs-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+:root:not([data-theme="light"]){ color-scheme:dark; }
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){
+  --fs-bg:#f7f3ea; --fs-bg2:#efe9db; --fs-glass:rgba(20,16,8,.045); --fs-glass2:rgba(20,16,8,.03);
+  --fs-ink:#191308; --fs-muted:#6f6454; --fs-line:rgba(20,16,8,.12);
+  --fs-gold:#9c7410; --fs-gold2:#7a5a0c; --fs-glow-gold:rgba(156,116,16,.22); --fs-glow-em:rgba(14,138,90,.18);
+}}
+:root[data-theme="dark"]{ --fs-bg:#07060a; --fs-ink:#f2ecdf; }
+
+.fs-body{margin:0;background:var(--fs-bg);color:var(--fs-ink);font-family:var(--fs-sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+.fs-wrap{max-width:980px;margin:0 auto;padding:0 20px 90px;position:relative}
+
+/* ── THE AURA · living depth behind the hero (pure CSS, GPU-cheap) ─────────────────────────── */
+.fs-aura{position:absolute;inset:-20vh -30vw auto -30vw;height:95vh;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(42% 46% at 28% 24%, var(--fs-glow-gold), transparent 70%),
+    radial-gradient(38% 42% at 74% 12%, var(--fs-glow-em), transparent 70%),
+    radial-gradient(60% 55% at 50% 0%, rgba(124,92,255,.10), transparent 75%);
+  filter:blur(28px) saturate(1.15);
+  animation:fs-aura-drift 26s ease-in-out infinite alternate}
+@keyframes fs-aura-drift{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2.5%,3%,0) scale(1.06)}}
+
+/* ── DISPLAY TYPE ──────────────────────────────────────────────────────────────────────────── */
+.fs-kicker{font-family:var(--fs-mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--fs-gold)}
+.fs-display{font-family:var(--fs-serif);font-weight:800;font-size:clamp(40px,7.2vw,76px);line-height:1.02;
+  letter-spacing:-.015em;margin:14px 0 18px}
+.fs-display .fs-grad{background:linear-gradient(92deg,var(--fs-gold) 10%,var(--fs-gold2) 45%,var(--fs-emerald2) 95%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.fs-lede{color:var(--fs-muted);font-size:clamp(16px,2.3vw,19.5px);max-width:62ch}
+.fs-lede b{color:var(--fs-ink);font-weight:600}
+.fs-h2{font-family:var(--fs-serif);font-weight:700;font-size:clamp(24px,3.6vw,34px);margin:64px 0 8px;letter-spacing:-.01em}
+.fs-sub{color:var(--fs-muted);font-size:15px;margin:0 0 20px;max-width:70ch}
+
+/* ── BUTTONS · the till ────────────────────────────────────────────────────────────────────── */
+.fs-btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:15.5px;
+  padding:14px 26px;border-radius:999px;color:#1a1204;border:0;cursor:pointer;
+  background:linear-gradient(135deg,var(--fs-gold2),var(--fs-gold) 60%);
+  box-shadow:0 8px 30px -8px var(--fs-glow-gold), inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .18s cubic-bezier(.2,.9,.3,1.4),box-shadow .18s}
+.fs-btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -8px var(--fs-glow-gold), inset 0 1px 0 rgba(255,255,255,.55)}
+.fs-btn--ghost{background:var(--fs-glass);color:var(--fs-ink);border:1px solid var(--fs-line);
+  box-shadow:0 4px 18px -10px rgba(0,0,0,.6);backdrop-filter:blur(10px)}
+.fs-btn--ghost:hover{border-color:var(--fs-gold);box-shadow:0 10px 30px -10px var(--fs-glow-gold)}
+.fs-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* ── GLASS CARDS ───────────────────────────────────────────────────────────────────────────── */
+.fs-grid{display:grid;gap:16px}
+@media(min-width:700px){.fs-grid--3{grid-template-columns:repeat(3,1fr)}.fs-grid--2{grid-template-columns:1fr 1fr}}
+.fs-card{position:relative;display:block;text-decoration:none;color:inherit;border-radius:var(--fs-r);
+  background:linear-gradient(180deg,var(--fs-glass),var(--fs-glass2));backdrop-filter:blur(14px);
+  border:1px solid var(--fs-line);padding:24px 22px 20px;overflow:hidden;
+  transition:transform .22s cubic-bezier(.2,.9,.3,1.3),border-color .22s,box-shadow .22s}
+.fs-card::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)}
+.fs-card:hover{transform:translateY(-5px);border-color:var(--fs-gold);
+  box-shadow:0 24px 60px -18px var(--fs-glow-gold)}
+.fs-card h3{margin:0 0 8px;font-family:var(--fs-serif);font-weight:700;font-size:19px}
+.fs-card p{margin:0 0 12px;color:var(--fs-muted);font-size:14.5px}
+.fs-card .fs-go{font-family:var(--fs-mono);font-size:12.5px;color:var(--fs-gold);letter-spacing:.02em}
+.fs-card:hover .fs-go{color:var(--fs-gold2)}
+
+/* ── RECEIPT CHIPS · proof as jewellery ────────────────────────────────────────────────────── */
+.fs-chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--fs-mono);font-size:12.5px;
+  color:var(--fs-emerald2);background:rgba(47,208,143,.08);border:1px solid rgba(47,208,143,.25);
+  border-radius:999px;padding:6px 13px}
+.fs-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--fs-emerald);
+  box-shadow:0 0 10px var(--fs-emerald);animation:fs-pulse 2.4s ease-in-out infinite}
+@keyframes fs-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.fs-chips{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ── STATS · big numbers that count (skin.mjs) ─────────────────────────────────────────────── */
+.fs-stats{display:flex;gap:40px;flex-wrap:wrap;margin:26px 0 6px}
+.fs-stat b{display:block;font-family:var(--fs-serif);font-weight:800;font-size:clamp(30px,4.6vw,44px);
+  line-height:1.05;background:linear-gradient(120deg,var(--fs-ink),var(--fs-gold2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.fs-stat span{color:var(--fs-muted);font-size:13px;font-family:var(--fs-mono);letter-spacing:.04em}
+
+/* ── PROOF MARQUEE · the shelf, moving ─────────────────────────────────────────────────────── */
+.fs-marquee{overflow:hidden;border-block:1px solid var(--fs-line);padding:14px 0;margin:54px 0 0;
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.fs-marquee .fs-track{display:flex;gap:44px;width:max-content;animation:fs-marquee 38s linear infinite;
+  font-family:var(--fs-mono);font-size:13px;color:var(--fs-muted);white-space:nowrap}
+.fs-marquee .fs-track b{color:var(--fs-gold)}
+.fs-marquee:hover .fs-track{animation-play-state:paused}
+@keyframes fs-marquee{to{transform:translateX(-50%)}}
+
+/* ── STEP RAIL ─────────────────────────────────────────────────────────────────────────────── */
+.fs-steps{counter-reset:fs;list-style:none;margin:0;padding:0;display:grid;gap:14px}
+@media(min-width:700px){.fs-steps{grid-template-columns:repeat(3,1fr)}}
+.fs-steps li{position:relative;background:linear-gradient(180deg,var(--fs-glass),var(--fs-glass2));
+  border:1px solid var(--fs-line);border-radius:var(--fs-r);padding:24px 20px 18px;backdrop-filter:blur(12px)}
+.fs-steps li::before{counter-increment:fs;content:counter(fs);position:absolute;top:-14px;left:18px;
+  width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;color:#1a1204;
+  background:linear-gradient(135deg,var(--fs-gold2),var(--fs-gold));box-shadow:0 6px 18px -6px var(--fs-glow-gold)}
+.fs-steps b{display:block;font-family:var(--fs-serif);font-size:17px;margin:2px 0 6px}
+.fs-steps span{color:var(--fs-muted);font-size:13.5px}
+
+/* ── PROOF BAND ────────────────────────────────────────────────────────────────────────────── */
+.fs-band{border-left:3px solid var(--fs-gold);background:linear-gradient(90deg,var(--fs-glass),transparent 80%);
+  border-radius:0 var(--fs-r-sm) var(--fs-r-sm) 0;padding:16px 20px;color:var(--fs-muted);font-size:15px}
+.fs-band a{color:var(--fs-gold2)} .fs-band b{color:var(--fs-ink)}
+
+/* ── STICKY CTA (skin.mjs toggles .is-on after the hero) ───────────────────────────────────── */
+.fs-sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--fs-bg) 92%,transparent) 30%);
+  transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.9,.25,1.2);pointer-events:none}
+.fs-sticky.is-on{transform:none;pointer-events:auto}
+.fs-sticky .fs-btn{box-shadow:0 14px 44px -8px var(--fs-glow-gold)}
+
+/* ── REVEALS (skin.mjs adds .is-in; stagger with --d) ──────────────────────────────────────── */
+.fs-reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease var(--d,0s),transform .7s cubic-bezier(.2,.9,.3,1) var(--d,0s)}
+.fs-reveal.is-in{opacity:1;transform:none}
+
+/* ── FOOT ──────────────────────────────────────────────────────────────────────────────────── */
+.fs-foot{margin-top:72px;padding-top:22px;border-top:1px solid var(--fs-line);color:var(--fs-muted);font-size:13px}
+.fs-foot a{color:var(--fs-gold2);text-decoration:none}
+.fs-foot .fs-links{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px}
+
+/* ── MOTION RESPECT · elite never means hostile ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  .fs-aura,.fs-chip::before,.fs-marquee .fs-track{animation:none}
+  .fs-reveal{opacity:1;transform:none;transition:none}
+  .fs-btn,.fs-card,.fs-sticky{transition:none}
+}

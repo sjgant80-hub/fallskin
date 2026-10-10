@@ -1,0 +1,13 @@
+mutation gate: skin.mjs · tests: node --test skin.test.mjs …
+{
+  "total": 12,
+  "capped": false,
+  "killed": 12,
+  "survived": [],
+  "ignored": [],
+  "rejectedExemptions": [],
+  "score": 1,
+  "clean": true
+}
+
+✓ 12/12 killed — no test-theatre.
