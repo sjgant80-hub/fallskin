@@ -28,8 +28,15 @@ function wire() {
     b.textContent = frames[0];
     const io = new IntersectionObserver((es) => es.forEach((e) => {
       if (!e.isIntersecting) return; io.unobserve(b);
-      let i = 0; const tick = () => { b.textContent = frames[i]; if (++i < frames.length) requestAnimationFrame(tick); };
-      requestAnimationFrame(tick);
+      // time-based with a GUARANTEED landing: rAF freezes in hidden tabs and would strand a wrong
+      // figure on screen — an interval still fires (throttled) and the deadline clamp always sets
+      // the exact final frame. The figure is the figure, whatever the tab was doing.
+      const dur = 900, t0 = performance.now();
+      const iv = setInterval(() => {
+        const k = Math.min(1, (performance.now() - t0) / dur);
+        b.textContent = frames[Math.min(frames.length - 1, Math.floor(k * (frames.length - 1)))];
+        if (k >= 1) clearInterval(iv);
+      }, 16);
     }), { threshold: 0.4 });
     io.observe(b);
   }
