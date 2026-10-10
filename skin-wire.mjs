@@ -20,6 +20,9 @@ function wire() {
   }
 
   const stats = [...document.querySelectorAll('.fs-stat b[data-value]')];
+  // THE FIGURE LAW: whatever visibility, motion or observers do, the EXACT real figure is on
+  // screen within 3 seconds. Animation is decoration; truth has a deadline.
+  setTimeout(() => { for (const b of stats) { const st = parseStat(b.dataset.value); const fr = st && stepsFor(st, 2); if (fr) b.textContent = fr[1]; } }, 3000);
   for (const b of stats) {
     const stat = parseStat(b.dataset.value);
     if (!stat) continue;
